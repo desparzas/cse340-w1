@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const baseController = require("../controllers/baseController");
 
 // GET home page
-router.get('/', (req, res) => {
-    res.render('index', { title: 'CSE Motors' });
-});
+router.get('/', baseController.buildHome);
 
 module.exports = router;

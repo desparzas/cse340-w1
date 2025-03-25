@@ -227,3 +227,25 @@ footer {
     margin-top: 10px;
   }
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  list-style-type: none;
+  background-color: #00b4d8;
+}
+
+.navbar li {
+  padding: 10px 20px;
+}
+
+.navbar li a {
+  color: white;
+  text-decoration: none;
+}
+
+.navbar li a:hover {
+  color: #222;
+}
