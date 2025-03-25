@@ -23,14 +23,15 @@ app.use("/inv", inventoryRoute);
 app.use(async (err, req, res, next) => {
     const nav = await utilities.getNav();
     console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+    let message = err.status == 404 ? err.message : "Oh no! There was a crash. Maybe try a different route?";
     res.render("errors/error", {
         title: err.status || "Server Error",
-        message: err.message,
+        message,
         nav,
     });
 });
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
