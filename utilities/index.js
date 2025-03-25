@@ -5,7 +5,7 @@ Util.getNav = async function () {
   let data = await invModel.getClassifications();
   let list = "<ul class = 'navbar'>";
   list += '<li><a href="/" title="Home page">Home</a></li>';
-  data.rows.forEach((row) => {
+  data.forEach((row) => {
     list += "<li>";
     list +=
       '<a href="/inv/type/' +
