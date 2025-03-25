@@ -249,3 +249,73 @@ footer {
 .navbar li a:hover {
   color: #222;
 }
+
+/* Estilo general para la lista de vehículos */
+#inv-display {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo para cada vehículo en la lista */
+#inv-display li {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+#inv-display li:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Estilo para las imágenes de los vehículos */
+#inv-display li img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Contenedor para el nombre y precio */
+#inv-display li .namePrice {
+  padding: 15px;
+  text-align: center;
+}
+
+#inv-display li .namePrice h2 {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+#inv-display li .namePrice h2 a {
+  text-decoration: none;
+  color: #333;
+  transition: color 0.2s;
+}
+
+#inv-display li .namePrice h2 a:hover {
+  color: #007bff;
+}
+
+#inv-display li .namePrice span {
+  display: block;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #28a745;
+  margin-top: 5px;
+}
+
+/* Estilo para el mensaje de error */
+.notice {
+  font-size: 1.2rem;
+  color: #dc3545;
+  text-align: center;
+  margin-top: 20px;
+}

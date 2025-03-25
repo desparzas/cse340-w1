@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const indexRouter = require('./routes/index');
+const inventoryRoute = require("./routes/inventoryRoute");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRouter);
+
+// Inventory Route
+app.use("/inv", inventoryRoute);
 
 // Start the server
 app.listen(PORT, () => {
