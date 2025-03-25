@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const indexRouter = require('./routes/index');
 const inventoryRoute = require("./routes/inventoryRoute");
+const utilities = require('./utilities'); // Asegúrate de que este archivo exista y tenga el método getNav
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,6 +18,17 @@ app.use('/', indexRouter);
 
 // Inventory Route
 app.use("/inv", inventoryRoute);
+
+// Error handling middleware
+app.use(async (err, req, res, next) => {
+    const nav = await utilities.getNav();
+    console.error(`Error at: "${req.originalUrl}": ${err.message}`);
+    res.render("errors/error", {
+        title: err.status || "Server Error",
+        message: err.message,
+        nav,
+    });
+});
 
 // Start the server
 app.listen(PORT, () => {
