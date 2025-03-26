@@ -8,6 +8,7 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const errorRouter = require('./routes/error');
 const utilities = require('./utilities');
 const accountRoute = require("./routes/accountRoute");
+const bodyParser = require("body-parser");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,6 +36,9 @@ app.use(function (req, res, next) {
   res.locals.messages = require('express-messages')(req, res);
   next();
 });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/', indexRouter);
