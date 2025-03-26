@@ -5,6 +5,7 @@ const accountController = require("../controllers/accountController");
 
 // Route to deliver the login view
 router.get("/login", accountController.buildLogin);
+router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
 // Error handler middleware
 router.use((err, req, res, next) => {
