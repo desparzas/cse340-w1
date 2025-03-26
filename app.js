@@ -7,6 +7,7 @@ const indexRouter = require('./routes/index');
 const inventoryRoute = require("./routes/inventoryRoute");
 const errorRouter = require('./routes/error');
 const utilities = require('./utilities');
+const accountRoute = require("./routes/accountRoute");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -40,6 +41,7 @@ app.use('/', indexRouter);
 
 // Inventory Route
 app.use("/inv", inventoryRoute);
+app.use("/account", accountRoute); // Add this line
 
 app.use('/', errorRouter);
 
