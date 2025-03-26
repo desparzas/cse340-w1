@@ -30,4 +30,10 @@ async function getInventoryByClassificationId(classification_id) {
   }
 }
 
-module.exports = { getClassifications, getClassificationById, getInventoryByClassificationId };
+async function getVehicleById (id) {
+    const query = 'SELECT * FROM inventory WHERE inv_id = $1';
+    const result = await pool.query(query, [id]);
+    return result.rows[0];
+};
+
+module.exports = { getClassifications, getClassificationById, getInventoryByClassificationId, getVehicleById };

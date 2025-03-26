@@ -8,19 +8,9 @@
   </head>
   <body>
     <div class="content-wrapper">
-      <!-- Content Heading -->
       <%- include('../partials/header.ejs') %> <%-
-      include('../partials/navigation.ejs') %>
-      <div class="container">
-        <% if (title) { %>
-        <h1><%= title %></h1>
-        <% } else { res.redirect('/') } %>
-        <!-- Message Block -->
-        <%# messages() %>
-
-        <!-- Inventory Items Display -->
-        <%- grid %>
-      </div>
+      include('../partials/navigation.ejs') %> <%- vehicleHTML %> <%-
+      include('../partials/footer.ejs') %>
     </div>
   </body>
 </html>

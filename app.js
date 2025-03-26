@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const indexRouter = require('./routes/index');
 const inventoryRoute = require("./routes/inventoryRoute");
+const errorRouter = require('./routes/error');
 const utilities = require('./utilities'); // Asegúrate de que este archivo exista y tenga el método getNav
 
 const app = express();
@@ -18,6 +19,8 @@ app.use('/', indexRouter);
 
 // Inventory Route
 app.use("/inv", inventoryRoute);
+
+app.use('/', errorRouter);
 
 // Error handling middleware
 app.use(async (err, req, res, next) => {

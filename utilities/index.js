@@ -71,6 +71,21 @@ Util.buildClassificationGrid = async function (data) {
   return grid;
 };
 
+Util.buildVehicleHTML = (vehicle) => {
+  console.log(vehicle);
+  return `
+      <div class="vehicle-detail">
+          <img src="${vehicle.inv_image}" alt="${vehicle.inv_make} ${vehicle.inv_model}" class="vehicle-image">
+          <div class="vehicle-info">
+              <h1>${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}</h1>
+              <p><strong>Price:</strong> $${vehicle.inv_price.toLocaleString()}</p>
+              <p><strong>Mileage:</strong> ${vehicle.inv_miles.toLocaleString()} miles</p>
+              <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+          </div>
+      </div>
+  `;
+};
+
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
 module.exports = Util;
