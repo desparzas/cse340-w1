@@ -3,48 +3,38 @@
   <%- include('../partials/head.ejs') %>
   <body>
     <div class="content-wrapper">
-      <%- include('../partials/header.ejs') %> <%-
-      include('../partials/navigation.ejs') %>
+      <%- include('../partials/header.ejs') %>
+      <%- include('../partials/navigation.ejs') %>
       <main>
         <h1><%= title %></h1>
         <%- messages() %>
-        <!-- Flash messages -->
-        <form action="/account/register" method="POST">
+        <% if (errors) { %>
+          <ul class="notice">
+            <% errors.array().forEach(error => { %>
+              <li><%= error.msg %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+        <form action="/account/register" method="post">
           <label for="account_firstname">First Name:</label>
-          <input
-            type="text"
-            id="account_firstname"
-            name="account_firstname"
-            required
-          />
-
+          <input type="text" id="account_firstname" name="account_firstname" value="<%= account_firstname || '' %>" required>
+  
           <label for="account_lastname">Last Name:</label>
-          <input
-            type="text"
-            id="account_lastname"
-            name="account_lastname"
-            required
-          />
-
+          <input type="text" id="account_lastname" name="account_lastname" value="<%= account_lastname || '' %>" required>
+  
           <label for="account_email">Email:</label>
-          <input
-            type="email"
-            id="account_email"
-            name="account_email"
-            required
-          />
-
+          <input type="email" id="account_email" name="account_email" value="<%= account_email || '' %>" required>
+  
           <label for="account_password">Password:</label>
-          <input
-            type="password"
-            id="account_password"
-            name="account_password"
-            minlength="12"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{12,}"
-            title="Password must be at least 12 characters long, contain at least one uppercase letter, one number, and one special character."
-            required
-          />
-
+          <div class="password-requirements">
+            Passwords must be at least 12 characters and contain at least:
+            <ul>
+              <li>1 number</li>
+              <li>1 uppercase letter</li>
+              <li>1 special character</li>
+            </ul>
+          </div>
+          <input type="password" id="account_password" name="account_password" required>
           <button type="submit">Register</button>
         </form>
       </main>
