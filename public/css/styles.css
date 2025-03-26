@@ -385,3 +385,13 @@ footer {
 .container {
   padding: 30px;
 }
+
+.notice {
+  color: green;
+  font-weight: bold;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+}
