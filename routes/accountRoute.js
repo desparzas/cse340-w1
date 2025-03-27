@@ -7,7 +7,6 @@ const regValidate = require("../utilities/account-validation");
 // Route to deliver the login view
 router.get("/login", accountController.buildLogin);
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
-router.post("/register", utilities.handleErrors(accountController.registerAccount));
 
 router.post("/login", (req, res) => {
   res.status(200).send("login process");
