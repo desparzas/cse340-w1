@@ -8,6 +8,16 @@ async function getAccountById(accountId) {
   return data.rows[0]; // Return only the first element of the rows array
 }
 
+async function checkExistingEmail(account_email) {
+  try {
+    const sql = "SELECT * FROM account WHERE account_email = $1";
+    const email = await pool.query(sql, [account_email]);
+    return email.rowCount;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 async function registerAccount(account_firstname, account_lastname, account_email, account_password) {
   try {
     const sql = `
@@ -20,4 +30,4 @@ async function registerAccount(account_firstname, account_lastname, account_emai
   }
 }
 
-module.exports = { getAccountById, registerAccount };
+module.exports = {  checkExistingEmail, getAccountById, registerAccount };

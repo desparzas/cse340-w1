@@ -9,7 +9,9 @@ router.get("/login", accountController.buildLogin);
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 router.post("/register", utilities.handleErrors(accountController.registerAccount));
 
-
+router.post("/login", (req, res) => {
+  res.status(200).send("login process");
+});
 
 // Process the registration data
 router.post(
