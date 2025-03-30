@@ -28,22 +28,120 @@ invCont.buildByClassificationId = async function (req, res, next) {
 
 invCont.getVehicleDetail = async (req, res, next) => {
   try {
-      const vehicleId = req.params.id;
-      let nav = await utilities.getNav();
-      const vehicleData = await invModel.getVehicleById(vehicleId);
+    const vehicleId = req.params.id;
+    let nav = await utilities.getNav();
+    const vehicleData = await invModel.getVehicleById(vehicleId);
 
-      if (!vehicleData) {
-          return res.status(404).render('errors/404', { title: 'Vehicle Not Found' });
-      }
+    if (!vehicleData) {
+      return res
+        .status(404)
+        .render("errors/404", { title: "Vehicle Not Found" });
+    }
 
-      const vehicleHTML = utilities.buildVehicleHTML(vehicleData);
-      res.render('inventory/detail', {
-          title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
-          vehicleHTML,
-          nav
-      });
+    const vehicleHTML = utilities.buildVehicleHTML(vehicleData);
+    res.render("inventory/detail", {
+      title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
+      vehicleHTML,
+      nav,
+    });
   } catch (error) {
-      next(error);
+    next(error);
+  }
+};
+
+invCont.renderManagementView = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    res.render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+invCont.renderAddClassificationView = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    res.render("inventory/add-classification", {
+      title: "Add Classification",
+      nav,
+      errors: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+invCont.addClassification = async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const { classification_name } = req.body;
+    console.log(classification_name);
+    await invModel.insertClassification(classification_name);
+    res.redirect("/");
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+
+invCont.renderAddInventoryView = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+
+    const classification_id = req.params.classificationId || null;
+
+    // Armar el HTML del select con las opciones
+    let classificationList = await utilities.renderSelectClassificationView(
+      classification_id
+    );
+
+    res.render("inventory/add-inv", {
+      title: "Add Inventory",
+      nav,
+      classificationList: classificationList,
+      errors: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+invCont.addInventory = async (req, res, next) => {
+  try {
+    const {
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_color,
+      inv_miles,
+    } = req.body;
+
+    const inv_image = "/images/vehicles/no-image.png";
+    const inv_thumbnail = "/images/vehicles/no-image-tn.png";
+
+    console.log("body", req.body);
+    await invModel.insertInventory({
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_color,
+      inv_miles,
+      inv_image,
+      inv_thumbnail,
+    });
+    res.redirect("/");
+  } catch (error) {
+    next(error);
   }
 };
 

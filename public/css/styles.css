@@ -253,7 +253,7 @@ footer {
 /* Estilo general para la lista de vehículos */
 #inv-display {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 20px;
   list-style: none;
   padding: 0;
@@ -290,7 +290,7 @@ footer {
 }
 
 #inv-display li .namePrice h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 10px 0;
 }
 
@@ -487,4 +487,37 @@ input:required:invalid {
 
 input:required:valid {
   border: 2px solid green;
+}
+
+.inventory-management-list{
+  list-style: none;
+  padding: 0;
+}
+
+.inventory-management-list li{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.inventory-management-list li:last-child{
+  border-bottom: none;
+}
+.inventory-management-list li a{
+  text-decoration: none;
+  color: #00b4d8;
+}
+.inventory-management-list li a:hover{
+  text-decoration: underline;
+}
+
+/* classificationList es un select*/
+#classificationList{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 20px;
+
 }

@@ -88,4 +88,32 @@ Util.buildVehicleHTML = (vehicle) => {
 
 Util.handleErrors = fn => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next)
 
+Util.renderSelectClassificationView = async (classification_id) => {
+  try {
+    const classifications = await invModel.getClassifications();
+
+    console.log(classifications);
+
+    // Armar el HTML del select con las opciones
+    let classificationList =
+      '<select name="classification_id" id="classificationList" required>';
+    classificationList += "<option value=''>Choose a Classification</option>";
+    classifications.forEach((row) => {
+      classificationList += '<option value="' + row.classification_id + '"';
+      if (
+        classification_id != null &&
+        row.classification_id == classification_id
+      ) {
+        classificationList += " selected ";
+      }
+      classificationList += ">" + row.classification_name + "</option>";
+    });
+    classificationList += "</select>";
+
+    return classificationList;
+  } catch (error) {
+    console.error("Error fetching classifications:", error);
+    throw error; // Re-throw the error for further handling
+  }
+};
 module.exports = Util;
