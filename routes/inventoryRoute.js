@@ -35,4 +35,6 @@ router.get(
     utilities.handleErrors(invController.getInventoryJSON)
 );
 
+router.get('/edit/:inv_id', utilities.handleErrors(invController.editInventoryView));
+
 module.exports = router;
