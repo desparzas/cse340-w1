@@ -96,4 +96,46 @@ validate.checkInventoryData = async (req, res, next) => {
   }
 };
 
+validate.checkUpdateData = async (req, res, next) => {
+  console.log("Validation checkUpdateData");
+  const {
+    inv_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_price,
+    inv_miles,
+    inv_color,
+    classification_id,
+  } = req.body;
+  let errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log("Validation errors: ", errors.array());
+    let nav = await utilities.getNav();
+    let classificationList = await utilities.renderSelectClassificationView(classification_id);
+
+    res.render("inventory/edit-inventory", {
+      title: "Edit Inventory",
+      nav,
+      classificationList,
+      errors,
+      inv_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_price,
+      inv_miles,
+      inv_color,
+      classification_id,
+    });
+
+    return;
+  } else {
+    console.log("Validation passed, proceeding to next middleware.");
+    next();
+  }
+};
+
 module.exports = validate;

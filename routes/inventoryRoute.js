@@ -23,6 +23,13 @@ router.post('/add-classification',
     utilities.handleErrors(invController.addClassification)
 );
 
+router.post(
+    "/update",
+    regValidate2.inventoryRules(),
+    regValidate2.checkUpdateData,
+    utilities.handleErrors(invController.updateInventory)
+);
+
 router.get('/add-inv', utilities.handleErrors(invController.renderAddInventoryView));
 router.post('/add-inv',
     authenticateJWT,

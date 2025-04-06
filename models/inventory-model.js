@@ -89,6 +89,43 @@ async function getVehicleById(id) {
   return result.rows[0];
 }
 
+async function updateInventory(
+  inv_id,
+  inv_make,
+  inv_model,
+  inv_description,
+  inv_price,
+  inv_year,
+  inv_miles,
+  inv_color,
+  classification_id
+) {
+  try {
+    const sql =
+      "UPDATE public.inventory SET inv_make = $1, inv_model = $2, inv_description = $3, inv_price = $4, inv_year = $5, inv_miles = $6, inv_color = $7, classification_id = $8 WHERE inv_id = $9 RETURNING *";
+    const values = [
+      inv_make,
+      inv_model,
+      inv_description,
+      inv_price,
+      inv_year,
+      inv_miles,
+      inv_color,
+      classification_id,
+      inv_id,
+    ];
+
+    const data = await pool.query(sql, values);
+    if (data.rowCount === 0) {
+      throw new Error("No rows updated");
+    }
+
+    return data.rows[0];
+  } catch (error) {
+    console.error("Model error: " + error);
+  }
+}
+
 module.exports = {
   getClassifications,
   getClassificationById,
@@ -97,4 +134,5 @@ module.exports = {
   insertInventory,
   insertClassification,
   getClassificationsByName,
+  updateInventory,
 };
