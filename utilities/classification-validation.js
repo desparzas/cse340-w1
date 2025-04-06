@@ -40,6 +40,8 @@ validate.checkClassificationData = async (req, res, next) => {
       classification_name,
       nav,
       errors,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
 
     return;

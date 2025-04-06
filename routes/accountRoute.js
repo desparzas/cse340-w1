@@ -10,6 +10,10 @@ router.get("/login", accountController.buildLogin);
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement));
 
+router.get("/update/:id", utilities.checkLogin, utilities.handleErrors(accountController.buildUpdateView));
+router.post("/update", regValidate.updateRules(), regValidate.checkRegDataUpdate, utilities.handleErrors(accountController.updateAccount));
+router.post("/update-password", regValidate.updatePasswordRules(), regValidate.checkRegDataUpdatePassword, utilities.handleErrors(accountController.updatePassword));
+
 router.post(
   "/login",
   regValidate.loginRules(),

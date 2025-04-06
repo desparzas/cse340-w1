@@ -7,7 +7,12 @@
       include('../partials/navigation.ejs') %>
       <main>
         <h1>Account Management</h1>
-        <p>You're logged in!</p>
+        <h2>Welcome <%= res.locals.accountData.account_firstname %></h2>
+        <a href="/account/update/<%= res.locals.accountData.account_id %>">Update Account Information</a>
+        <% if (res.locals.accountData.account_type === "Employee" || res.locals.accountData.account_type === "Admin") { %>
+          <h3>Inventory Management</h3>
+          <p><a href="/inv/">Manage Inventory</a></p>
+        <% } %>
         <%- messages() %>
       </main>
       <%- include('../partials/footer.ejs') %>

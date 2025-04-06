@@ -9,15 +9,16 @@ const authenticateJWT = require("../middlewares/authenticateJWT");
 
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
+router.get("/type/:classificationId", utilities.authorizeRole, utilities.handleErrors(invController.buildByClassificationId));
 
-router.get('/detail/:id', utilities.handleErrors(invController.getVehicleDetail));
+router.get('/detail/:id', utilities.authorizeRole, utilities.handleErrors(invController.getVehicleDetail));
 
-router.get('/', utilities.handleErrors(invController.renderManagementView));
+router.get('/', utilities.authorizeRole, utilities.handleErrors(invController.renderManagementView));
 
-router.get('/add-classification', utilities.handleErrors(invController.renderAddClassificationView));
+router.get('/add-classification', utilities.authorizeRole, utilities.handleErrors(invController.renderAddClassificationView));
 
 router.post('/add-classification', 
+    utilities.authorizeRole,
     regValidate.classificationRules(),
     regValidate.checkClassificationData,
     utilities.handleErrors(invController.addClassification)
@@ -25,28 +26,31 @@ router.post('/add-classification',
 
 router.post(
     "/update",
+    utilities.authorizeRole,
     regValidate2.inventoryRules(),
     regValidate2.checkUpdateData,
     utilities.handleErrors(invController.updateInventory)
 );
 
-router.get('/add-inv', utilities.handleErrors(invController.renderAddInventoryView));
+router.get('/add-inv', utilities.authorizeRole, utilities.handleErrors(invController.renderAddInventoryView));
 router.post('/add-inv',
     authenticateJWT,
+    utilities.authorizeRole,
     regValidate2.inventoryRules(),
     regValidate2.checkInventoryData,
     utilities.handleErrors(invController.addInventory));
 
 router.get(
     "/getInventory/:classification_id",
+    utilities.authorizeRole,
     utilities.handleErrors(invController.getInventoryJSON)
 );
 
-router.get('/edit/:inv_id', utilities.handleErrors(invController.editInventoryView));
+router.get('/edit/:inv_id', utilities.authorizeRole, utilities.handleErrors(invController.editInventoryView));
 
-router.get('/delete/:inv_id', utilities.handleErrors(invController.renderDeleteConfirmationView));
+router.get('/delete/:inv_id', utilities.authorizeRole, utilities.handleErrors(invController.renderDeleteConfirmationView));
 
-router.post('/delete', utilities.handleErrors(invController.deleteInventoryItem));
+router.post('/delete', utilities.authorizeRole, utilities.handleErrors(invController.deleteInventoryItem));
 
 
 module.exports = router;

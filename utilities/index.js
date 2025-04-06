@@ -120,6 +120,7 @@ Util.renderSelectClassificationView = async (classification_id) => {
 };
 
 Util.checkJWTToken = (req, res, next) => {
+  console.log("Checking JWT token...");
   if (req.cookies.jwt) {
     jwt.verify(req.cookies.jwt, process.env.ACCESS_TOKEN_SECRET, (err, accountData) => {
       if (err) {
@@ -129,6 +130,9 @@ Util.checkJWTToken = (req, res, next) => {
       }
       res.locals.accountData = accountData;
       res.locals.loggedin = 1;
+      console.log("Logged in as: ", accountData);
+      console.log("Account data: ", res.locals.accountData);
+
       next();
     });
   } else {
@@ -144,5 +148,14 @@ Util.checkLogin = (req, res, next) => {
     return res.redirect("/account/login");
   }
 };
+
+Util.authorizeRole = (req, res, next) => {
+  const accountType = res.locals.accountData?.account_type;
+  if (accountType === "Employee" || accountType === "Admin") {
+    return next();
+  }
+  req.flash("notice", "You do not have permission to access this area.");
+  res.redirect("/account/login");
+}
 
 module.exports = Util;

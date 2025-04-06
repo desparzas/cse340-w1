@@ -19,6 +19,8 @@ invCont.buildByClassificationId = async function (req, res, next) {
       title: className + " vehicles",
       nav,
       grid,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     console.error(`Error at: "${req.originalUrl}": ${error.message}`);
@@ -43,6 +45,8 @@ invCont.getVehicleDetail = async (req, res, next) => {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       vehicleHTML,
       nav,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);
@@ -55,6 +59,8 @@ invCont.renderManagementView = async (req, res, next) => {
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);
@@ -68,6 +74,8 @@ invCont.renderAddClassificationView = async (req, res, next) => {
       title: "Add Classification",
       nav,
       errors: null,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);
@@ -104,6 +112,8 @@ invCont.renderAddInventoryView = async (req, res, next) => {
       nav,
       classificationList: classificationList,
       errors: null,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);
@@ -152,7 +162,9 @@ invCont.renderManagementView = async (req, res, next) => {
     res.render("inventory/management", {
       title: "Inventory Management",
       nav,
-      classificationSelect, // Pass the select list to the view
+      classificationSelect,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);
@@ -193,6 +205,8 @@ invCont.editInventoryView = async function (req, res, next) {
     inv_miles: itemData.inv_miles,
     inv_color: itemData.inv_color,
     classification_id: itemData.classification_id,
+    loggedin: res.locals.loggedin || false,
+    accountData: res.locals.accountData || null,
   });
 };
 
@@ -267,6 +281,8 @@ invCont.renderDeleteConfirmationView = async function (req, res, next) {
       inv_model: itemData.inv_model,
       inv_year: itemData.inv_year,
       inv_price: itemData.inv_price,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
   } catch (error) {
     next(error);

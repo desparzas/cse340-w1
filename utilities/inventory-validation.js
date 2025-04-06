@@ -88,6 +88,8 @@ validate.checkInventoryData = async (req, res, next) => {
       inv_miles,
       inv_color,
       classification_id: req.body.classification_id,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
 
     return;
@@ -129,6 +131,8 @@ validate.checkUpdateData = async (req, res, next) => {
       inv_miles,
       inv_color,
       classification_id,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
 
     return;

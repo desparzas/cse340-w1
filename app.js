@@ -64,6 +64,8 @@ app.use(async (err, req, res, next) => {
         title: err.status || "Server Error",
         message,
         nav,
+        loggedin: res.locals.loggedin || false,
+        accountData: res.locals.accountData || null,
     });
 });
 
