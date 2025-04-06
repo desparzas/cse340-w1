@@ -8,7 +8,7 @@ const { generateToken } = require("../utilities/jwtUtils");
 // Route to deliver the login view
 router.get("/login", accountController.buildLogin);
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
-router.get("/", utilities.handleErrors(accountController.buildAccountManagement));
+router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement));
 
 router.post(
   "/login",
