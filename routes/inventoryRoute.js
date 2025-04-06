@@ -44,4 +44,9 @@ router.get(
 
 router.get('/edit/:inv_id', utilities.handleErrors(invController.editInventoryView));
 
+router.get('/delete/:inv_id', utilities.handleErrors(invController.renderDeleteConfirmationView));
+
+router.post('/delete', utilities.handleErrors(invController.deleteInventoryItem));
+
+
 module.exports = router;
