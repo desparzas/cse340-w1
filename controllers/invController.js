@@ -145,4 +145,30 @@ invCont.addInventory = async (req, res, next) => {
   }
 };
 
+invCont.renderManagementView = async (req, res, next) => {
+  try {
+    let nav = await utilities.getNav();
+    const classificationSelect = await utilities.renderSelectClassificationView(); // Add this line
+    res.render("inventory/management", {
+      title: "Inventory Management",
+      nav,
+      classificationSelect, // Pass the select list to the view
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+invCont.getInventoryJSON = async (req, res, next) => {
+  console.log("getInventoryJSON called");
+  const classification_id = parseInt(req.params.classification_id);
+  const invData = await invModel.getInventoryByClassificationId(classification_id);
+  if (invData[0]?.inv_id) {
+    console.log("Data found:", invData);
+    return res.json(invData);
+  } else {
+    next(new Error("No data returned"));
+  }
+};
+
 module.exports = invCont;

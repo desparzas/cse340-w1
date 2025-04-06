@@ -521,3 +521,50 @@ input:required:valid {
   margin-bottom: 20px;
 
 }
+
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#inventoryDisplay th, #inventoryDisplay td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #f4f4f4;
+  font-weight: bold;
+}
+
+.edit_cell a {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #00b4d8;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.edit_cell a:hover {
+  background-color: #0077a8;
+}
+
+.delete_cell a {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: red;
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.delete_cell a:hover {
+  background-color: darkred;
+}

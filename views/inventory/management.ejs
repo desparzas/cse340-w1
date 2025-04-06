@@ -8,14 +8,22 @@
       <main>
         <h1>Inventory Management</h1>
         <% if (locals.message) { %>
-        <p><%= message %></p>
+          <p><%= message %></p>
         <% } %>
         <ul class="inventory-management-list">
           <li><a href="/inv/add-classification">Add New Classification</a></li>
           <li><a href="/inv/add-inv">Add New Inventory</a></li>
         </ul>
+      
+        <h2>Manage Inventory</h2>
+        <p>Select a classification to view inventory items.</p>
+        <%- classificationSelect %> <!-- Render the dropdown -->
+      
+        <table id="inventoryDisplay"></table>
+        <noscript>JavaScript must be enabled to use this page.</noscript>
       </main>
-
+      
+      <script src="../../js/inventory.js"></script>
       <%- include('../partials/footer.ejs') %>
     </div>
   </body>
