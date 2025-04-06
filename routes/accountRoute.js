@@ -3,13 +3,30 @@ const router = new express.Router();
 const utilities = require("../utilities");
 const accountController = require("../controllers/accountController");
 const regValidate = require("../utilities/account-validation");
+const { generateToken } = require("../utilities/jwtUtils");
 
 // Route to deliver the login view
 router.get("/login", accountController.buildLogin);
 router.get("/register", utilities.handleErrors(accountController.buildRegister));
 
-router.post("/login", (req, res) => {
-  res.status(200).send("login process");
+
+router.post("/login", async (req, res) => {
+  console.log("Login attempt:", req.body);
+  const { account_email, account_password } = req.body;
+  console.log("Email:", account_email);
+  console.log("Password:", account_password);
+
+  // Replace this with your actual authentication logic
+  const account = await accountController.validCredentials(account_email, account_password);
+
+  if (account) {
+    const token = generateToken({ account_id: account.account_id, account_type: account.account_type });
+    res.cookie('jwt', token, { httpOnly: true, secure: true });
+    return res.redirect('/');
+  }
+
+  req.flash("notice", "Invalid credentials");
+  res.redirect("/account/login");
 });
 
 // Process the registration data

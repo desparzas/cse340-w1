@@ -9,6 +9,8 @@ const errorRouter = require('./routes/error');
 const utilities = require('./utilities');
 const accountRoute = require("./routes/accountRoute");
 const bodyParser = require("body-parser");
+const cookieParser = require('cookie-parser');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;

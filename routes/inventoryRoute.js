@@ -5,6 +5,7 @@ const invController = require("../controllers/invController");
 const utilities = require("../utilities/");
 const regValidate = require("../utilities/classification-validation");
 const regValidate2 = require("../utilities/inventory-validation");
+const authenticateJWT = require("../middlewares/authenticateJWT");
 
 
 // Route to build inventory by classification view
@@ -24,6 +25,7 @@ router.post('/add-classification',
 
 router.get('/add-inv', utilities.handleErrors(invController.renderAddInventoryView));
 router.post('/add-inv',
+    authenticateJWT,
     regValidate2.inventoryRules(),
     regValidate2.checkInventoryData,
     utilities.handleErrors(invController.addInventory));

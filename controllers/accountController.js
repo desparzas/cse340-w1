@@ -61,6 +61,19 @@ async function registerAccount(req, res) {
   }
 }
 
+async function validCredentials(account_email, account_password) {
+  const found = await accountModel.checkExistingEmail(account_email);
+  if (found) {
+    const account = await accountModel.getAccountByEmail(account_email);
+    console.log("Account found:", account);
+    const passwordMatch = await bcrypt.compare(account_password, account.account_password);
+    if (passwordMatch) {
+      return account;
+    }
+  }
+  return null;
+}
+
 async function buildRegister(req, res, next) {
   try {
     let nav = await utilities.getNav();
@@ -79,4 +92,4 @@ async function buildRegister(req, res, next) {
   }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount };
+module.exports = { buildLogin, buildRegister, registerAccount, validCredentials };
