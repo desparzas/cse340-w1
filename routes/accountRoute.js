@@ -29,6 +29,12 @@ router.post("/login", async (req, res) => {
   res.redirect("/account/login");
 });
 
+router.get("/logout", (req, res) => {
+  res.clearCookie("jwt");
+  req.flash("notice", "You have been logged out.");
+  res.redirect("/");
+});
+
 // Process the registration data
 router.post(
   "/register",
