@@ -44,6 +44,8 @@ async function accountLogin(req, res) {
       nav,
       errors: null,
       account_email,
+      loggedin: res.locals.loggedin || false,
+      accountData: res.locals.accountData || null,
     });
     return;
   }
@@ -70,6 +72,8 @@ async function accountLogin(req, res) {
         nav,
         errors: null,
         account_email,
+        loggedin: res.locals.loggedin || false,
+        accountData: res.locals.accountData || null,
       });
     }
   } catch (error) {
@@ -111,14 +115,35 @@ async function registerAccount(req, res) {
   );
 
   if (regResult.rowCount) {
+    // Create account data object for JWT
+    const accountData = {
+      account_firstname,
+      account_lastname,
+      account_email,
+      account_type: "Client",
+      account_id: regResult.rows[0].account_id
+    };
+
+    // Generate and set JWT token
+    const accessToken = jwt.sign(
+      accountData,
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: 3600 }
+    );
+
+    // Set cookie with token
+    const cookieOptions = {
+      httpOnly: true,
+      maxAge: 3600 * 1000,
+      ...(process.env.NODE_ENV !== "development" && { secure: true }),
+    };
+    res.cookie("jwt", accessToken, cookieOptions);
+
     req.flash(
       "notice",
-      `Congratulations, you're registered ${account_firstname}. Please log in.`
+      `Congratulations, you're registered ${account_firstname}. You are now logged in.`
     );
-    res.status(201).render("account/login", {
-      title: "Login",
-      nav,
-    });
+    res.redirect("/account/");
   } else {
     req.flash("notice", "Sorry, the registration failed.");
     res.status(501).render("account/register", {
