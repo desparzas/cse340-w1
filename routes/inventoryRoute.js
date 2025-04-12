@@ -2,6 +2,7 @@
 const express = require("express");
 const router = new express.Router();
 const invController = require("../controllers/invController");
+const reviewController = require("../controllers/reviewController");
 const utilities = require("../utilities/");
 const regValidate = require("../utilities/classification-validation");
 const regValidate2 = require("../utilities/inventory-validation");
@@ -9,11 +10,11 @@ const authenticateJWT = require("../middlewares/authenticateJWT");
 
 
 // Route to build inventory by classification view
-router.get("/type/:classificationId", utilities.authorizeRole, utilities.handleErrors(invController.buildByClassificationId));
+router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
-router.get('/detail/:id', utilities.authorizeRole, utilities.handleErrors(invController.getVehicleDetail));
+router.get('/detail/:id', utilities.handleErrors(invController.getVehicleDetail));
 
-router.get('/', utilities.authorizeRole, utilities.handleErrors(invController.renderManagementView));
+router.get('/', utilities.handleErrors(invController.renderManagementView));
 
 router.get('/add-classification', utilities.authorizeRole, utilities.handleErrors(invController.renderAddClassificationView));
 
@@ -42,7 +43,6 @@ router.post('/add-inv',
 
 router.get(
     "/getInventory/:classification_id",
-    utilities.authorizeRole,
     utilities.handleErrors(invController.getInventoryJSON)
 );
 
@@ -52,5 +52,6 @@ router.get('/delete/:inv_id', utilities.authorizeRole, utilities.handleErrors(in
 
 router.post('/delete', utilities.authorizeRole, utilities.handleErrors(invController.deleteInventoryItem));
 
+router.post("/reviews/add", utilities.checkLogin, reviewController.addReview);
 
 module.exports = router;

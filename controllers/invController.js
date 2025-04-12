@@ -1,5 +1,6 @@
 const invModel = require("../models/inventory-model");
 const utilities = require("../utilities/");
+const reviewModel = require("../models/review-model");
 
 const invCont = {};
 
@@ -40,10 +41,14 @@ invCont.getVehicleDetail = async (req, res, next) => {
         .render("errors/404", { title: "Vehicle Not Found" });
     }
 
+    const reviews = await reviewModel.getReviewsByVehicle(vehicleId);
+
     const vehicleHTML = utilities.buildVehicleHTML(vehicleData);
     res.render("inventory/detail", {
       title: `${vehicleData.inv_make} ${vehicleData.inv_model}`,
       vehicleHTML,
+      vehicle: vehicleData,
+      reviews,
       nav,
       loggedin: res.locals.loggedin || false,
       accountData: res.locals.accountData || null,
@@ -306,6 +311,5 @@ invCont.deleteInventoryItem = async function (req, res, next) {
   }
 };
 
-// ...existing code...
 
 module.exports = invCont;

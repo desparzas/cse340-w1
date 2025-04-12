@@ -21,11 +21,8 @@ router.post(
   utilities.handleErrors(accountController.accountLogin)
 );
 
-router.get("/logout", (req, res) => {
-  res.clearCookie("jwt");
-  req.flash("notice", "You have been logged out.");
-  res.redirect("/");
-});
+// Add this route with your other routes
+router.get("/logout", accountController.logoutUser);
 
 // Process the registration data
 router.post(

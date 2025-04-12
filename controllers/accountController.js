@@ -44,8 +44,6 @@ async function accountLogin(req, res) {
       nav,
       errors: null,
       account_email,
-      loggedin: res.locals.loggedin || false,
-      accountData: res.locals.accountData || null,
     });
     return;
   }
@@ -58,12 +56,17 @@ async function accountLogin(req, res) {
         process.env.ACCESS_TOKEN_SECRET,
         { expiresIn: 3600 }
       );
+      
+      res.clearCookie("jwt");
+      
       const cookieOptions = {
         httpOnly: true,
         maxAge: 3600 * 1000,
         ...(process.env.NODE_ENV !== "development" && { secure: true }),
       };
       res.cookie("jwt", accessToken, cookieOptions);
+
+      req.flash("notice", `Welcome back, ${accountData.account_firstname}!`);
       return res.redirect("/account/");
     } else {
       req.flash("notice", "Please check your credentials and try again.");
@@ -72,8 +75,6 @@ async function accountLogin(req, res) {
         nav,
         errors: null,
         account_email,
-        loggedin: res.locals.loggedin || false,
-        accountData: res.locals.accountData || null,
       });
     }
   } catch (error) {
@@ -273,6 +274,12 @@ async function updatePassword(req, res, next) {
   }
 }
 
+async function logoutUser(req, res) {
+  res.clearCookie("jwt");
+  req.flash("notice", "You have been logged out.");
+  res.redirect("/");
+}
+
 module.exports = {
   buildLogin,
   buildRegister,
@@ -283,4 +290,5 @@ module.exports = {
   buildUpdateView,
   updateAccount,
   updatePassword,
+  logoutUser,
 };

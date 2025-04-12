@@ -9,8 +9,49 @@
   <body>
     <div class="content-wrapper">
       <%- include('../partials/header.ejs') %> <%-
-      include('../partials/navigation.ejs') %> <%- vehicleHTML %> <%-
-      include('../partials/footer.ejs') %>
+      include('../partials/navigation.ejs') %>
+      <%- vehicleHTML %> 
+      <!-- After vehicle details -->
+      <section class="vehicle-reviews">
+        <h2>Reviews</h2>
+        
+        <% if (locals.loggedin) { %>
+          <form action="/inv/reviews/add" method="POST" class="review-form">
+            <input type="hidden" name="inv_id" value="<%= vehicle.inv_id %>">
+            <label for="rating">Rating:</label>
+            <select name="rating" id="rating" required>
+              <option value="5">5 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="2">2 Stars</option>
+              <option value="1">1 Star</option>
+            </select>
+            
+            <label for="review_text">Your Review:</label>
+            <textarea name="review_text" id="review_text" required></textarea>
+            
+            <button type="submit">Submit Review</button>
+          </form>
+        <% } %>
+        
+        <div class="reviews-list">
+          <% if (locals.reviews && reviews.length > 0) { %>
+            <% reviews.forEach(review => { %>
+              <div class="review-item">
+                <div class="review-header">
+                  <span class="rating">★ <%= review.rating %>/5</span>
+                  <span class="author"><%= review.account_firstname %> <%= review.account_lastname %></span>
+                  <span class="date"><%= new Date(review.review_date).toLocaleDateString() %></span>
+                </div>
+                <p class="review-text"><%= review.review_text %></p>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <p>No reviews yet. Be the first to review this vehicle!</p>
+          <% } %>
+        </div>
+      </section>
+      <%- include('../partials/footer.ejs') %>
     </div>
   </body>
 </html>
